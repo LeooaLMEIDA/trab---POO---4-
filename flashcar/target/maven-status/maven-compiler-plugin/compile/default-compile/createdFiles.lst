@@ -1,0 +1,4 @@
+br\unipar\flashcar\exception\DescricaoInvalidaException.class
+br\unipar\flashcar\service\CorService.class
+br\unipar\flashcar\Flashcar.class
+br\unipar\flashcar\model\Cor.class
