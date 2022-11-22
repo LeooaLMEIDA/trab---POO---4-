@@ -27,8 +27,23 @@ public class MarcaService {
     }
     public void insert(Marca marca) throws DescricaoInvalidaException, SQLException{
         valida(marca);
-        MarcaRepository marcaRepository = new MarcaRepository();
-        marcaRepository.insert(marca);       
+        if(marca.getId()>0){
+            MarcaRepository marcaRepository = new MarcaRepository();
+            marcaRepository.insertId(marca);
+        }else{
+            MarcaRepository marcaRepository = new MarcaRepository();
+            marcaRepository.insert(marca);
+        }
+        
+        
+//        ArrayList<Marca> marcaGetId = new ArrayList<>();
+//        marcaGetId = marcaRepository.findAll();
+//        for (Marca marca1 : marcaGetId) {
+//            if (marca1.equals(marca.getNome())) {
+//                marca.setId(marca1.getId());
+//                break;
+//            }
+//        }
     }
     public ArrayList<Marca> findAll() throws SQLException{
         MarcaRepository marcaRepository = new MarcaRepository();

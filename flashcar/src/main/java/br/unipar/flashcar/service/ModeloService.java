@@ -1,10 +1,8 @@
 package br.unipar.flashcar.service;
 
-import br.unipar.flashcar.database.repository.MarcaRepository;
 import br.unipar.flashcar.database.repository.ModeloRepository;
 import br.unipar.flashcar.exception.DescricaoInvalidaException;
 import br.unipar.flashcar.exception.NaoCadastradoException;
-import br.unipar.flashcar.model.Marca;
 import br.unipar.flashcar.model.Modelo;
 import java.sql.SQLException;
 import java.util.ArrayList;

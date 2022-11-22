@@ -3,6 +3,7 @@ package br.unipar.flashcar.database.repository;
 
 import br.unipar.flashcar.database.DatabaseConnection;
 import br.unipar.flashcar.exception.NaoCadastradoException;
+import br.unipar.flashcar.model.Marca;
 import br.unipar.flashcar.model.Modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ public class ModeloRepository {
     public void insert(Modelo modelo) throws SQLException, NaoCadastradoException {
         Connection conn = null;
         PreparedStatement ps = null;
+        ResultSet rs            = null;
         
         MarcaRepository marca = new MarcaRepository();
         
@@ -36,7 +38,6 @@ public class ModeloRepository {
             ps = conn.prepareStatement(INSERT);
             ps.setString(1, modelo.getNome());
             ps.setInt(2, modelo.getMarca().getId());
-            ps.execute();
             
         } finally {
             if(ps!= null){

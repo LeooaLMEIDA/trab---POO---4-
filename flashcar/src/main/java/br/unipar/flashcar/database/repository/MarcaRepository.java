@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class MarcaRepository {
     
     private String INSERT = "INSERT INTO MARCA (nome) VALUES (?);";
+    private String INSERT_ID = "INSERT INTO MARCA (id,nome) VALUES (?,?);";
     private String UPDATE = "UPDATE MARCA SET nome = ? WHERE id = ?;";
     private String DELETE = "DELETE MARCA WHERE id = ?;";
     private String FIND_BY_ID = "SELECT id, nome from MARCA where id = ?;";
@@ -21,12 +22,42 @@ public class MarcaRepository {
     public void insert(Marca marca) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        ArrayList<Marca> listaResultado = new ArrayList<>();
+        
         try {
 
             conn = new DatabaseConnection().getConnection();
 
             ps = conn.prepareStatement(INSERT);
             ps.setString(1, marca.getNome());
+            ps.execute();
+            
+        } finally {
+            if(ps!= null){
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }            
+        }
+    }
+    
+    public void insertId(Marca marca) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        ArrayList<Marca> listaResultado = new ArrayList<>();
+        
+        try {
+
+            conn = new DatabaseConnection().getConnection();
+
+            ps = conn.prepareStatement(INSERT);
+            ps.setInt(1, marca.getId());
+            ps.setString(2, marca.getNome());
             ps.execute();
             
         } finally {
