@@ -3,12 +3,13 @@ package br.unipar.flashcar.database.repository;
 
 import br.unipar.flashcar.database.DatabaseConnection;
 import br.unipar.flashcar.exception.NaoCadastradoException;
-import br.unipar.flashcar.model.Marca;
 import br.unipar.flashcar.model.Modelo;
+import br.unipar.flashcar.service.MarcaService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /* @author leoal */
@@ -25,19 +26,26 @@ public class ModeloRepository {
         PreparedStatement ps = null;
         ResultSet rs            = null;
         
-        MarcaRepository marca = new MarcaRepository();
+        MarcaService marca = new MarcaService();
         
         try {
             
-            if (!(marca.findById(modelo.getId()).getId()>0)) {
+            if (!(marca.findById(modelo.getMarca().getId()).getId()>0)) {
                 throw new NaoCadastradoException();
             }
 
             conn = new DatabaseConnection().getConnection();
 
-            ps = conn.prepareStatement(INSERT);
+            ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, modelo.getNome());
             ps.setInt(2, modelo.getMarca().getId());
+            ps.execute();
+            
+            rs = ps.getGeneratedKeys();
+            
+            while (rs.next()){
+                modelo.setId(rs.getInt("id"));
+            }
             
         } finally {
             if(ps!= null){
@@ -112,11 +120,11 @@ public class ModeloRepository {
         Connection conn = null;
         PreparedStatement ps = null;
         
-        MarcaRepository marca = new MarcaRepository();
+        MarcaService marca = new MarcaService();
         
         try {
             
-            if (!(marca.findById(modelo.getId()).getId()>0)) {
+            if (!(marca.findById(modelo.getMarca().getId()).getId()>0)) {
                 throw new NaoCadastradoException();
             }
 

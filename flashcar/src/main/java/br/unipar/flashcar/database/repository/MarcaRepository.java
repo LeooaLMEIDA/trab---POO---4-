@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /* @author leoal */
@@ -30,9 +31,15 @@ public class MarcaRepository {
 
             conn = new DatabaseConnection().getConnection();
 
-            ps = conn.prepareStatement(INSERT);
+            ps = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, marca.getNome());
             ps.execute();
+            
+            rs = ps.getGeneratedKeys();
+            
+            while (rs.next()){
+                marca.setId(rs.getInt("id"));
+            }
             
         } finally {
             if(ps!= null){
@@ -104,6 +111,7 @@ public class MarcaRepository {
         }
         return listaResultado;
     }
+    
     public void delete (Marca marca) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -146,6 +154,7 @@ public class MarcaRepository {
             }            
         }
     }
+    
     public Marca findById(int id) throws SQLException {
         Connection conn         = null;
         PreparedStatement ps    = null;

@@ -30,15 +30,15 @@ public class Flashcar {
             System.out.println(corService.findById(2).toString()); 
             
             Marca fiat = new Marca();
-            fiat.setId(1);
+            //fiat.setId(1);
             fiat.setNome("Fiat");
             
             Marca chevrolet = new Marca();
-            chevrolet.setId(2);
+            //chevrolet.setId(2);
             chevrolet.setNome("Chevrolet");
             
             Marca volks = new Marca();
-            volks.setId(3);
+            //volks.setId(3);
             volks.setNome("Volkswagen");
             
             Modelo uno = new Modelo();
@@ -62,6 +62,32 @@ public class Flashcar {
             servicoModelo.insert(gol);
             servicoModelo.insert(uno);
             servicoModelo.insert(cruze);
+            
+            gol.setNome("Polo");
+            uno.setNome("Palio");
+            cruze.setNome("Vectra");
+            
+            servicoModelo.update(gol);
+            servicoModelo.update(uno);
+            servicoModelo.update(cruze);
+            
+            ArrayList<Marca> listaMarcas = new ArrayList<>();
+            listaMarcas = servicoMarca.findAll();
+            
+            System.out.println(listaMarcas.toString());
+            
+            ArrayList<Modelo> listaModelos = new ArrayList<>();
+            listaModelos = servicoModelo.findAll();
+            
+            System.out.println(listaModelos.toString());
+            
+            servicoModelo.delete(gol);
+            servicoModelo.delete(uno);
+            servicoModelo.delete(cruze);
+            
+            listaModelos = servicoModelo.findAll();
+            
+            System.out.println(listaModelos.toString());
             
             //corService.delete();
             
