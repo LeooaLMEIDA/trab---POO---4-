@@ -16,7 +16,7 @@ public class MarcaRepository {
     private String UPDATE = "UPDATE MARCA SET nome = ? WHERE id = ?;";
     private String DELETE = "DELETE MARCA WHERE id = ?;";
     private String FIND_BY_ID = "SELECT id, nome from MARCA where id = ?;";
-    private String FIND_ALL = "SELECT id, descricao from MARCA;";
+    private String FIND_ALL = "SELECT id, nome from MARCA;";
     
     public void insert(Marca marca) throws SQLException {
         Connection conn = null;
